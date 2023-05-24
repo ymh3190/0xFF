@@ -1,3 +1,23 @@
+@media screen and (max-width: 1750px) {
+  .header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .header-logo img {
+    width: 150px;
+  }
+
+  .header-search__form {
+    display: flex;
+  }
+
+  .header-navigation__ul {
+    display: flex;
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .header {
     display: flex;

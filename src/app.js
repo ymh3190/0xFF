@@ -9,13 +9,19 @@ app.use("/static", express.static("static"));
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use("/logo", express.static("logo"));
 
+/**
+ * logger
+ */
 app.use((req, res, next) => {
-  const { method, url } = req;
+  const { method, url, protocol, ip } = req;
   const { statusCode } = res;
-  console.log(method, url, statusCode);
+  console.log(protocol.toUpperCase(), method, url, statusCode, ip);
   next();
 });
 
+/**
+ * middleware
+ */
 app.use((req, res, next) => {
   res.locals.siteName = "0xFF";
   res.locals.paginations = Math.ceil(files.length / 8);
@@ -27,8 +33,9 @@ app.get("/", (req, res) => {
     if (i < 8) return file;
   });
 
-  res.render("index", { files: contents });
+  res.status(200).render("index", { files: contents });
 });
+
 app.get("/:id(\\d+)", (req, res) => {
   const {
     params: { id },
@@ -42,8 +49,9 @@ app.get("/:id(\\d+)", (req, res) => {
     if (i >= pre && i < next) return file;
   });
 
-  res.render("index", { files: contents });
+  res.status(200).render("index", { files: contents });
 });
+
 app.get("/search", (req, res) => {
   const {
     query: { query },
@@ -52,7 +60,21 @@ app.get("/search", (req, res) => {
   const contents = files.filter((file) => file.title.includes(query));
   const paginations = Math.ceil(contents.length / 8);
 
-  res.render("search", { files: contents, paginations });
+  res.status(200).render("search", { files: contents, paginations });
+});
+
+/**
+ * errror handler
+ */
+app.use((err, req, res, next) => {
+  if (err) throw new err();
+});
+
+/**
+ * 404 not found
+ */
+app.use((req, res) => {
+  res.status(404).render("404");
 });
 
 const port = 8000;

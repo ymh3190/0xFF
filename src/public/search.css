@@ -1,11 +1,29 @@
+@media screen and (max-width: 1750px) {
+  .renderer-search {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .renderer-search-container {
+    border-top: 1px solid black;
+  }
+
+  video {
+    width: 400px;
+    height: 340px;
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .renderer-search {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
+
   .renderer-search-container {
     border-top: 1px solid black;
   }
+
   video {
     width: 350px;
     height: 340px;
@@ -17,9 +35,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
+
   .renderer-search-container {
     border-top: 1px solid black;
   }
+
   video {
     width: 180px;
   }
