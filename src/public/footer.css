@@ -1,0 +1,8 @@
+.footer-pagination__ul {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-pagination__ul-li:not(:first-child) {
+  padding-left: 10px;
+}

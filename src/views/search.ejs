@@ -1,0 +1,17 @@
+<head>
+    <link rel="stylesheet" href="/public/search.css">
+</head>
+
+<%- include('base') %>
+
+    <div class="root">
+        <%- include('./header') %>
+            <main class="renderer-search">
+                <% for (const file of files) {%>
+                    <div class="renderer-search-container">
+                        <video src="<%= file.path %>" controls></video>
+                    </div>
+                    <%}%>
+            </main>
+            <%- include('./footer') %>
+    </div>

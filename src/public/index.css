@@ -1,0 +1,26 @@
+@media screen and (max-width: 1440px) {
+  .renderer-index {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .renderer-index-container {
+    border-top: 1px solid black;
+  }
+  video {
+    width: 350px;
+    height: 340px;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .renderer-index {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .renderer-index-container {
+    border-top: 1px solid black;
+  }
+  video {
+    width: 170px;
+  }
+}

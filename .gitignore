@@ -1,0 +1,4 @@
+node_modules/
+logo/
+static/
+.DS_Store
