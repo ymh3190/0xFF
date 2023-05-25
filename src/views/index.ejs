@@ -10,8 +10,40 @@
                 <% for (const file of files) {%>
                     <div class="renderer-index-container">
                         <video src="<%= file.path %>" controls></video>
+                        <div class="renderer-index-container-interactive" id="interactive">
+                            <div class="renderer-index-container-interactive-left">
+                                <span class="renderer-index-container-interactive-left-play">
+                                    <i class="fa-solid fa-play" id="play"></i>
+                                </span>
+                                <span class="renderer-index-container-interactive-left-volume">
+                                    <i class="fa-solid fa-volume-high" id="volume"></i>
+                                    <input type="range" name="" id="volumeRange" value="100" />
+                                </span>
+                                <span class="renderer-index-container-interactive-left-time">
+                                    <span id="currentTime"></span>
+                                    <span>/</span>
+                                    <span id="entireTime"></span>
+                                </span>
+                            </div>
+                            <div class="renderer-index-container-interactive-right">
+                                <span>
+                                    <i class="fa-solid fa-expand" id="expand"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <%}%>
             </main>
-            <%- include('./footer') %>
+            <div class="renderer-pagination">
+                <ul class="renderer-pagination__ul">
+                    <% for (let i=0; i<paginations; i++) {%>
+                        <li class="renderer-pagination__ul-li">
+                            <a href="<%= i %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <%}%>
+                </ul>
+            </div>
+            <%- include('footer') %>
     </div>

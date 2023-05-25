@@ -6,12 +6,9 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views"));
 app.use("/static", express.static("static"));
-app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/public", express.static(path.resolve(__dirname, "public")));
 app.use("/logo", express.static("logo"));
 
-/**
- * logger
- */
 app.use((req, res, next) => {
   const { method, url, protocol, ip } = req;
   const { statusCode } = res;
@@ -19,9 +16,6 @@ app.use((req, res, next) => {
   next();
 });
 
-/**
- * middleware
- */
 app.use((req, res, next) => {
   res.locals.siteName = "0xFF";
   res.locals.paginations = Math.ceil(files.length / 8);
@@ -54,27 +48,36 @@ app.get("/:id(\\d+)", (req, res) => {
 
 app.get("/search", (req, res) => {
   const {
-    query: { query },
+    query: { query, page },
   } = req;
 
-  const contents = files.filter((file) => file.title.includes(query));
-  const paginations = Math.ceil(contents.length / 8);
+  if (!query) {
+    return res.status(400).redirect("/");
+  }
 
-  res.status(200).render("search", { files: contents, paginations });
+  if (isNaN(Number(page))) {
+    return res.status(400).redirect("/");
+  }
+
+  const pagination = page ? Number(page) : 0;
+  const pre = pagination * 8;
+  const next = (pagination + 1) * 8;
+
+  const _ = files.filter((file) => file.title.match(new RegExp(query, "i")));
+  const contents = _.filter((file, i) => {
+    if (i >= pre && i < next) return file;
+  });
+  const paginations = Math.ceil(_.length / 8);
+
+  res.status(200).render("search", { files: contents, paginations, query });
 });
 
-/**
- * errror handler
- */
 app.use((err, req, res, next) => {
-  if (err) throw new err();
+  if (err) throw err;
 });
 
-/**
- * 404 not found
- */
 app.use((req, res) => {
-  res.status(404).render("404");
+  res.status(404).redirect("/");
 });
 
 const port = 8000;

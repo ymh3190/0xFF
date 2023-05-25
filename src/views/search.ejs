@@ -13,5 +13,16 @@
                     </div>
                     <%}%>
             </main>
-            <%- include('./footer') %>
+            <div class="renderer-pagination">
+                <ul class="renderer-pagination__ul">
+                    <% for (let i=0; i<paginations; i++) {%>
+                        <li class="renderer-pagination__ul-li">
+                            <a href="/search?query=<%= query %>&page=<%= i %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <%}%>
+                </ul>
+            </div>
+            <%- include('footer') %>
     </div>
