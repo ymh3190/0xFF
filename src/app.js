@@ -55,7 +55,7 @@ app.get("/search", (req, res) => {
     return res.status(400).redirect("/");
   }
 
-  if (isNaN(Number(page))) {
+  if (page && isNaN(Number(page))) {
     return res.status(400).redirect("/");
   }
 
@@ -67,6 +67,7 @@ app.get("/search", (req, res) => {
   const contents = _.filter((file, i) => {
     if (i >= pre && i < next) return file;
   });
+  console.log(contents);
   const paginations = Math.ceil(_.length / 8);
 
   res.status(200).render("search", { files: contents, paginations, query });

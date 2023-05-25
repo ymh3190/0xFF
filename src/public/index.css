@@ -16,6 +16,17 @@
   }
 }
 
+@media screen and (max-width: 1180px) {
+  .renderer-index {
+    height: 590px;
+  }
+
+  video {
+    width: 295px;
+    height: 290px;
+  }
+}
+
 @media screen and (max-width: 390px) {
   .renderer-index {
     grid-template-columns: repeat(2, 1fr);
@@ -40,11 +51,6 @@
   justify-content: center;
 }
 
-
 .renderer-pagination__ul-li:not(:first-child) {
-  padding-left: 10px;
-}
-
-.renderer-index-container-interactive {
-  display: none;
+  padding-left: 20px;
 }
