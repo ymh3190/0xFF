@@ -10,6 +10,10 @@
 }
 
 @media screen and (max-width: 1440px) {
+  .renderer-index {
+    height: 685px;
+  }
+
   video {
     width: 350px;
     height: 340px;
@@ -27,16 +31,6 @@
   }
 }
 
-@media screen and (max-width: 390px) {
-  .renderer-index {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  video {
-    width: 375px;
-  }
-}
-
 .renderer-index {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -44,6 +38,10 @@
 
 .renderer-index-container {
   border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+}
+
+.renderer-pagination {
+  padding-top: 10px;
 }
 
 .renderer-pagination__ul {

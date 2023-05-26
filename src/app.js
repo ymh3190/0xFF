@@ -1,13 +1,28 @@
 import express from "express";
 import path from "path";
 import files from "./db/files";
+// import cookie from "cookie";
+// import { randomFillSync } from "crypto";
 const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static("static"));
 app.use("/public", express.static(path.resolve(__dirname, "public")));
 app.use("/logo", express.static("logo"));
+app.use("/favicon", express.static("favicon"));
+// app.use((req, res, next) => {
+//   const buf = Buffer.alloc(16);
+//   const hex = randomFillSync(buf).toString();
+//   res.setHeader(
+//     "Set-Cookie",
+//     cookie.serialize("id", hex, {
+//       httpOnly: true,
+//     })
+//   );
+//   next();
+// });
 
 app.use((req, res, next) => {
   const { method, url, protocol, ip } = req;
@@ -51,12 +66,8 @@ app.get("/search", (req, res) => {
     query: { query, page },
   } = req;
 
-  if (!query) {
-    return res.status(400).redirect("/");
-  }
-
-  if (page && isNaN(Number(page))) {
-    return res.status(400).redirect("/");
+  if (!query || isNaN(Number(page))) {
+    return res.redirect("/");
   }
 
   const pagination = page ? Number(page) : 0;
@@ -67,18 +78,16 @@ app.get("/search", (req, res) => {
   const contents = _.filter((file, i) => {
     if (i >= pre && i < next) return file;
   });
-  console.log(contents);
   const paginations = Math.ceil(_.length / 8);
-
   res.status(200).render("search", { files: contents, paginations, query });
+});
+
+app.use((req, res) => {
+  res.status(404).render("error", { errMsg: "Route not found" });
 });
 
 app.use((err, req, res, next) => {
   if (err) throw err;
-});
-
-app.use((req, res) => {
-  res.status(404).redirect("/");
 });
 
 const port = 8000;

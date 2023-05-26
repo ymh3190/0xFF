@@ -1,0 +1,12 @@
+.renderer-error {
+    position: absolute;
+}
+
+.renderer-error-container span {
+    font-size: 30px;
+    font-weight: 600;
+
+    position: relative;
+    top: 50px;
+    left: 100px;
+}
