@@ -66,20 +66,42 @@ app.get("/search", (req, res) => {
     query: { query, page },
   } = req;
 
-  if (!query || isNaN(Number(page))) {
+  if (!query || (page && isNaN(Number(page)))) {
     return res.redirect("/");
+  }
+
+  const terms = query.trim().split(" ");
+  const _ = [];
+  for (const term of terms) {
+    for (const file of files) {
+      if (_.includes(file)) continue;
+      if (file.title.match(new RegExp(term, "i"))) {
+        _.push(file);
+      }
+    }
   }
 
   const pagination = page ? Number(page) : 0;
   const pre = pagination * 8;
   const next = (pagination + 1) * 8;
 
-  const _ = files.filter((file) => file.title.match(new RegExp(query, "i")));
   const contents = _.filter((file, i) => {
     if (i >= pre && i < next) return file;
   });
+
   const paginations = Math.ceil(_.length / 8);
   res.status(200).render("search", { files: contents, paginations, query });
+
+  /* const searchOneTerm = () => {
+    const pagination = page ? Number(page) : 0;
+    const pre = pagination * 8;
+    const next = (pagination + 1) * 8;
+
+    const _ = files.filter((file) => file.title.match(new RegExp(query, "i")));
+    const contents = _.filter((file, i) => {
+      if (i >= pre && i < next) return file;
+    });
+  }; */
 });
 
 app.use((req, res) => {
