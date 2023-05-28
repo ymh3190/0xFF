@@ -71,25 +71,24 @@ app.get("/search", (req, res) => {
   }
 
   const terms = query.trim().split(" ");
-  const _ = [];
+  const containers = [];
   for (const term of terms) {
     for (const file of files) {
-      if (_.includes(file)) continue;
+      if (containers.includes(file)) continue;
       if (file.title.match(new RegExp(term, "i"))) {
-        _.push(file);
+        containers.push(file);
       }
     }
   }
-
+  const paginations = Math.ceil(containers.length / 8);
   const pagination = page ? Number(page) : 0;
   const pre = pagination * 8;
   const next = (pagination + 1) * 8;
 
-  const contents = _.filter((file, i) => {
+  const contents = containers.filter((file, i) => {
     if (i >= pre && i < next) return file;
   });
 
-  const paginations = Math.ceil(_.length / 8);
   res.status(200).render("search", { files: contents, paginations, query });
 
   /* const searchOneTerm = () => {
@@ -97,8 +96,10 @@ app.get("/search", (req, res) => {
     const pre = pagination * 8;
     const next = (pagination + 1) * 8;
 
-    const _ = files.filter((file) => file.title.match(new RegExp(query, "i")));
-    const contents = _.filter((file, i) => {
+    const containers = files.filter((file) =>
+      file.title.match(new RegExp(query, "i"))
+    );
+    const contents = containers.filter((file, i) => {
       if (i >= pre && i < next) return file;
     });
   }; */
