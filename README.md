@@ -4,4 +4,5 @@
   - static, logo, favicon 폴더 생성
   - npm ci 명령어로 package 설치
   - npm run dev
+  - npm run dist
   - localhost:8000 접속
