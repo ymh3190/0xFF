@@ -1,3 +1,12 @@
+@import "reset.scss";
+
+@import "partials/header.scss";
+@import "partials/footer.scss";
+
+@import "pages/error.scss";
+@import "pages/index.scss";
+@import "pages/search.scss";
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;

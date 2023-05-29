@@ -1,0 +1,13 @@
+.footer {
+  padding-top: 10px;
+
+  &-pagination {
+    &__ul {
+      display: flex;
+      justify-content: center;
+      &-li:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+  }
+}

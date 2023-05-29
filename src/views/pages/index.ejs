@@ -1,0 +1,13 @@
+<%- include('../layouts/base') %>
+
+    <div class="root">
+        <%- include('../partials/header') %>
+            <main class="renderer-index">
+                <% for (const file of files) {%>
+                    <div class="renderer-index-container">
+                        <a href="/watch/<%= file.title %>"><video src="<%= file.path %>"></video></a>
+                    </div>
+                    <%}%>
+            </main>
+            <%- include('../partials/footer') %>
+    </div>

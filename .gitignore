@@ -3,3 +3,5 @@ logo/
 static/
 .DS_Store
 favicon/
+dist/
+.env
