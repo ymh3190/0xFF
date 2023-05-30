@@ -7,6 +7,7 @@ const entireTimeDOM = document.getElementById("entireTime");
 const expandDOM = document.getElementById("expand");
 const containerDOM = document.getElementById("container");
 const containerInteractionDOM = document.getElementById("containerInteraction");
+let volume = volumeRangeDOM.value;
 
 playDOM.addEventListener("click", async () => {
   if (videoDOM.paused) {
@@ -24,9 +25,11 @@ volumeDOM.addEventListener("click", () => {
   if (!videoDOM.muted) {
     videoDOM.muted = true;
     volumeDOM.classList.add("fa-volume-xmark");
+    volumeRangeDOM.value = 0;
   } else {
     videoDOM.muted = false;
     volumeDOM.classList.remove("fa-volume-xmark");
+    volumeRangeDOM.value = volume;
   }
 });
 
@@ -95,6 +98,7 @@ const handlecontainerInteractionDOM = () => {
     moveTimeout = null;
   }
   containerInteractionDOM.style.display = "grid";
+  containerInteractionDOM.style.backgroundColor = "black";
   moveTimeout = setTimeout(() => {
     containerInteractionDOM.style.display = "none";
   }, 3000);
