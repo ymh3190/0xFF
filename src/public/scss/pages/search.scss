@@ -1,0 +1,15 @@
+.renderer-search {
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+    height: 650px;
+
+    &-container {
+        video {
+            width: 350px;
+            height: 300px;
+            object-fit: fill;
+        }
+    }
+}

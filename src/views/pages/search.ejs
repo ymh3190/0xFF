@@ -5,7 +5,7 @@
             <main class="renderer-search">
                 <% for (const file of files) {%>
                     <div class="renderer-search-container">
-                        <video src="<%= file.path %>" controls></video>
+                        <a href="/watch/<%= file.title %>"><video src="<%= file.path %>"></video></a>
                     </div>
                     <%}%>
             </main>
