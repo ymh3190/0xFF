@@ -6,7 +6,7 @@ const currentTimeDOM = document.getElementById("currentTime");
 const entireTimeDOM = document.getElementById("entireTime");
 const expandDOM = document.getElementById("expand");
 const containerDOM = document.getElementById("container");
-const containerInteractiveDOM = document.getElementById("containerInteractive");
+const containerInteractionDOM = document.getElementById("containerInteraction");
 
 playDOM.addEventListener("click", async () => {
   if (videoDOM.paused) {
@@ -76,28 +76,28 @@ expandDOM.addEventListener("click", () => {
     expandDOM.classList.add("fa-compress");
     videoDOM.classList.add("video-expand");
     containerDOM.classList.add("container-expand");
-    containerInteractiveDOM.classList.add("container-interactive-expand");
+    containerInteractionDOM.classList.add("container-interaction-expand");
   } else {
     document.exitFullscreen();
     expandDOM.classList.remove("fa-compress");
     expandDOM.classList.add("fa-expand");
     videoDOM.classList.remove("video-expand");
     containerDOM.classList.remove("container-expand");
-    containerInteractiveDOM.classList.remove("container-interactive-expand");
+    containerInteractionDOM.classList.remove("container-interaction-expand");
   }
 });
 
 let moveTimeout;
 let leaveTimeout;
-const handlecontainerInteractiveDOM = () => {
+const handlecontainerInteractionDOM = () => {
   if (moveTimeout) {
     clearTimeout(moveTimeout);
     moveTimeout = null;
   }
-  containerInteractiveDOM.style.display = "grid";
+  containerInteractionDOM.style.display = "grid";
   moveTimeout = setTimeout(() => {
-    containerInteractiveDOM.style.display = "none";
+    containerInteractionDOM.style.display = "none";
   }, 3000);
 };
 
-containerDOM.addEventListener("mousemove", handlecontainerInteractiveDOM);
+containerDOM.addEventListener("mousemove", handlecontainerInteractionDOM);
