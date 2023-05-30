@@ -1,0 +1,14 @@
+.renderer-watch {
+    &-container {
+        position: absolute;
+
+        video {
+            width: 900px;
+        }
+
+        .video-expand {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

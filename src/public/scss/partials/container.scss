@@ -1,0 +1,30 @@
+.container-interaction {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    position: relative;
+    bottom: 25px;
+
+    span {
+        color: white;
+    }
+
+    &-left {
+        justify-self: start;
+        position: relative;
+        left: 2%;
+        display: grid;
+        grid-template-columns: 0.25fr 1.75fr 1fr;
+        align-items: center;
+
+        &-volume {
+            align-self: center;
+        }
+    }
+
+    &-right {
+        justify-self: end;
+        position: relative;
+        right: 2%;
+    }
+}

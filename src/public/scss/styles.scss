@@ -2,10 +2,12 @@
 
 @import "partials/header.scss";
 @import "partials/footer.scss";
+@import "partials/container.scss";
 
 @import "pages/error.scss";
 @import "pages/index.scss";
 @import "pages/search.scss";
+@import "pages/watch.scss";
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
