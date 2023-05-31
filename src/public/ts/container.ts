@@ -1,12 +1,18 @@
-const playDOM = document.getElementById("play");
-const volumeDOM = document.getElementById("volume");
-const videoDOM = document.getElementById("video");
-const volumeRangeDOM = document.getElementById("volumeRange");
-const currentTimeDOM = document.getElementById("currentTime");
-const entireTimeDOM = document.getElementById("entireTime");
-const expandDOM = document.getElementById("expand");
-const containerDOM = document.getElementById("container");
-const containerInteractionDOM = document.getElementById("containerInteraction");
+const playDOM = document.getElementById("play") as HTMLElement;
+const volumeDOM = document.getElementById("volume") as HTMLElement;
+const videoDOM = document.getElementById("video") as HTMLVideoElement;
+const volumeRangeDOM = document.getElementById(
+  "volumeRange"
+) as HTMLInputElement;
+const currentTimeDOM = document.getElementById(
+  "currentTime"
+) as HTMLSpanElement;
+const entireTimeDOM = document.getElementById("entireTime") as HTMLSpanElement;
+const expandDOM = document.getElementById("expand") as HTMLElement;
+const containerDOM = document.getElementById("container") as HTMLDivElement;
+const containerInteractionDOM = document.getElementById(
+  "containerInteraction"
+) as HTMLDivElement;
 let volume = volumeRangeDOM.value;
 
 playDOM.addEventListener("click", async () => {
@@ -25,7 +31,7 @@ volumeDOM.addEventListener("click", () => {
   if (!videoDOM.muted) {
     videoDOM.muted = true;
     volumeDOM.classList.add("fa-volume-xmark");
-    volumeRangeDOM.value = 0;
+    volumeRangeDOM.value = "0";
   } else {
     videoDOM.muted = false;
     volumeDOM.classList.remove("fa-volume-xmark");
@@ -33,8 +39,8 @@ volumeDOM.addEventListener("click", () => {
   }
 });
 
-volumeRangeDOM.addEventListener("input", (e) => {
-  videoDOM.volume = e.target.value / 100;
+volumeRangeDOM.addEventListener("input", (e: Event) => {
+  videoDOM.volume = parseInt((e.target as HTMLInputElement).value) / 100;
 
   if (videoDOM.volume >= 0.6) {
     volumeDOM.classList.remove("fa-volume-off", "fa-volume-low");
@@ -48,7 +54,10 @@ volumeRangeDOM.addEventListener("input", (e) => {
   }
 });
 
-const updateTime = (time, timeDOM) => {
+const updateTime = (
+  time: { seconds: number; minutes: number; hours: number },
+  timeDOM: HTMLSpanElement
+) => {
   const { hours, minutes, seconds } = time;
   timeDOM.innerText = `${hours ? `${hours >= 10 ? hours : `0${hours}`}:` : ""}${
     minutes ? `${minutes >= 10 ? minutes : `0${minutes}`}:` : "00:"
@@ -90,8 +99,7 @@ expandDOM.addEventListener("click", () => {
   }
 });
 
-let moveTimeout;
-let leaveTimeout;
+let moveTimeout: NodeJS.Timeout | null;
 const handlecontainerInteractionDOM = () => {
   if (moveTimeout) {
     clearTimeout(moveTimeout);

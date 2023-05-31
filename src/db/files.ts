@@ -1,6 +1,13 @@
 import { readdirSync } from "fs";
 
-const files = readdirSync("static")
+type File = {
+  path: string;
+  title: string;
+};
+
+export type Files = Array<File>;
+
+const files: File[] = readdirSync("static")
   .filter((file) => !file.includes(".DS_Store"))
   .map((file) => {
     return {

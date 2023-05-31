@@ -1,7 +1,12 @@
 import "dotenv/config";
-import express from "express";
+import express, {
+  ErrorRequestHandler,
+  NextFunction,
+  Request,
+  Response,
+} from "express";
 import path from "path";
-import files from "./db/files";
+import files, { type Files } from "./db/files";
 import mysql from "./db/mysql";
 // const [videos] = await (await mysql).query("SELECT * FROM videos");
 // import cookie from "cookie";
@@ -65,9 +70,8 @@ app.get("/search", (req, res) => {
   if (!query || (page && isNaN(Number(page)))) {
     return res.redirect("/");
   }
-  const containers = []; // 검색된 컨텐츠을 임시로 저장할 배열
-
-  const terms = query.trim().split(" ");
+  const containers: Files = [];
+  const terms = (query as string).trim().split(" ");
   for (const term of terms) {
     for (const file of files) {
       if (containers.includes(file)) continue;
@@ -110,9 +114,16 @@ app.use((req, res) => {
   res.status(404).render("pages/error", { errMsg: "Route not found" });
 });
 
-app.use((err, req, res, next) => {
-  if (err) throw err;
-});
+app.use(
+  (
+    err: ErrorRequestHandler,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    if (err) throw err;
+  }
+);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

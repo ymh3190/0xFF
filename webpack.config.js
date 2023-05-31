@@ -3,9 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    main: "./src/public/js/main.js",
-    search: "./src/public/js/search.js",
-    container: "./src/public/js/container.js",
+    main: "./src/public/ts/main.ts",
+    search: "./src/public/ts/search.ts",
+    container: "./src/public/ts/container.ts",
   },
   output: {
     filename: "./js/[name].js",
@@ -19,6 +19,10 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        use: [{ loader: "ts-loader" }],
+      },
       {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],

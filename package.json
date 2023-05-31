@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/app.js",
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src/app.ts",
     "dist": "webpack --mode=development -w"
   },
   "license": "MIT",
@@ -15,14 +16,19 @@
     "mysql2": "^3.3.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.21.5",
     "@babel/core": "^7.21.8",
     "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.21.5",
+    "@tsconfig/node16": "^1.0.4",
+    "@types/express": "^4.17.17",
     "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^2.7.6",
     "nodemon": "^2.0.22",
     "sass": "^1.62.1",
     "sass-loader": "^13.3.1",
+    "ts-loader": "^9.4.3",
+    "ts-node": "^10.9.1",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1"
   }
