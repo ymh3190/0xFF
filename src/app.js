@@ -66,38 +66,24 @@ app.get("/search", (req, res) => {
     return res.redirect("/");
   }
   const containers = []; // 검색된 컨텐츠을 임시로 저장할 배열
-  let contents; // containers 배열에서 0~7 인덱스된 변수
-  let paginations; // 총 페이지 수
 
-  /**
-   * query로 컨텐츠 검색
-   */
-  function searchContents() {
-    const terms = query.trim().split(" ");
-    for (const term of terms) {
-      for (const file of files) {
-        if (containers.includes(file)) continue;
-        if (file.title.match(new RegExp(term, "i"))) {
-          containers.push(file);
-        }
+  const terms = query.trim().split(" ");
+  for (const term of terms) {
+    for (const file of files) {
+      if (containers.includes(file)) continue;
+      if (file.title.match(new RegExp(term, "i"))) {
+        containers.push(file);
       }
     }
-    paginations = Math.ceil(containers.length / 8);
   }
 
-  /**
-   * 8개씩 인덱싱
-   */
-  function filterContents() {
-    const pagination = page ? Number(page) : 0;
-    const pre = pagination * 8;
-    const next = (pagination + 1) * 8;
-    contents = containers.filter((file, i) => {
-      if (i >= pre && i < next) return file;
-    });
-  }
-  searchContents();
-  filterContents();
+  const paginations = Math.ceil(containers.length / 8);
+  const pagination = page ? Number(page) : 0;
+  const pre = pagination * 8;
+  const next = (pagination + 1) * 8;
+  const contents = containers.filter((file, i) => {
+    if (i >= pre && i < next) return file;
+  });
 
   res
     .status(200)
@@ -106,7 +92,13 @@ app.get("/search", (req, res) => {
 
 app.get("/watch/:id", (req, res) => {
   const { id } = req.params;
-  const video = files.filter((file) => file.title.includes(id))[0];
+  let video;
+  for (const file of files) {
+    if (file.title.includes(id)) {
+      video = file;
+      break;
+    }
+  }
   if (!video) {
     return res.status(404).render("pages/error", { errMsg: "Video not found" });
   }

@@ -4,10 +4,10 @@
   align-items: center;
 
   &-logo {
-    padding-left: 40px;
 
     img {
-      width: 150px;
+      width: 100px;
+      height: 50px;
       border-radius: 15px;
     }
   }
@@ -48,7 +48,6 @@
   }
 
   &-navigation {
-    padding-right: 40px;
 
     &__ul {
       display: flex;
