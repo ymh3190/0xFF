@@ -1,19 +1,25 @@
 .container-interaction {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "top top"
+    "left right";
   align-items: center;
   position: relative;
-  bottom: 35px;
-  height: 35px;
+  bottom: 45px;
+  height: 45px;
+  padding: 0 20px 0 20px;
 
   span {
     color: white;
   }
 
+  &-top {
+    background-color: red;
+  }
+
   &-left {
+    grid-area: left;
     justify-self: start;
-    position: relative;
-    left: 2%;
     display: grid;
     grid-template-columns: 0.25fr 1.75fr 1fr;
     align-items: center;
@@ -24,8 +30,7 @@
   }
 
   &-right {
+    grid-area: right;
     justify-self: end;
-    position: relative;
-    right: 2%;
   }
 }

@@ -106,7 +106,6 @@ const handlecontainerInteractionDOM = () => {
     moveTimeout = null;
   }
   containerInteractionDOM.style.display = "grid";
-  containerInteractionDOM.style.backgroundColor = "black";
   moveTimeout = setTimeout(() => {
     containerInteractionDOM.style.display = "none";
   }, 3000);

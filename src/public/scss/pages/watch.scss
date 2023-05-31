@@ -1,17 +1,19 @@
 .renderer-watch {
-    padding-top: 10px;
-    height: 650px;
+  padding-top: 10px;
+  height: 670px;
 
-    &-container {
-        position: absolute;
+  &-container {
+    position: absolute;
 
-        video {
-            width: 900px;
-        }
-
-        .video-expand {
-            width: 100%;
-            height: 100%;
-        }
+    video {
+      width: 970px;
+      height: 530px;
+      object-fit: fill;
     }
+
+    .video-expand {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

@@ -2,12 +2,13 @@
   padding-top: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  row-gap: 10px;
-  height: 650px;
+  row-gap: 20px;
+  height: 670px;
+  column-gap: 15px;
 
   &-container {
     video {
-      width: 350px;
+      width: 340px;
       height: 300px;
       object-fit: fill;
     }
