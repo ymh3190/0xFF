@@ -32,7 +32,7 @@ const playVideo = () => {
 playDOM.addEventListener("click", playVideo);
 videoDOM.addEventListener("click", playVideo);
 
-volumeDOM.addEventListener("click", () => {
+const muteVideo = () => {
   if (!videoDOM.muted) {
     videoDOM.muted = true;
     volumeDOM.classList.add("fa-volume-xmark");
@@ -42,10 +42,13 @@ volumeDOM.addEventListener("click", () => {
     volumeDOM.classList.remove("fa-volume-xmark");
     volumeRangeDOM.value = volume;
   }
-});
+};
+
+volumeDOM.addEventListener("click", muteVideo);
 
 volumeRangeDOM.addEventListener("input", (e: Event) => {
-  videoDOM.volume = parseInt((e.target as HTMLInputElement).value) / 100;
+  const input = e.target as HTMLInputElement;
+  videoDOM.volume = parseInt(input.value) / 100;
   type Volume = "high" | "low" | "off" | "xmark";
   type FaVolume = `fa-volume-${Volume}`;
   const volumes: FaVolume[] = [
@@ -98,7 +101,7 @@ videoDOM.addEventListener("timeupdate", () => {
   timelineDOM.value = String(Math.floor(videoDOM.currentTime));
 });
 
-expandDOM.addEventListener("click", () => {
+const expandVideo = () => {
   if (!document.fullscreenElement) {
     containerDOM.requestFullscreen();
     expandDOM.classList.remove("fa-expand");
@@ -110,7 +113,9 @@ expandDOM.addEventListener("click", () => {
     expandDOM.classList.add("fa-expand");
     videoDOM.classList.remove("video-expand");
   }
-});
+};
+
+expandDOM.addEventListener("click", expandVideo);
 
 let moveTimeout: NodeJS.Timeout | null;
 containerDOM.addEventListener("mousemove", () => {
@@ -120,10 +125,24 @@ containerDOM.addEventListener("mousemove", () => {
   }
   containerInteractionDOM.style.display = "grid";
   moveTimeout = setTimeout(() => {
-    // containerInteractionDOM.style.display = "none";
+    containerInteractionDOM.style.display = "none";
   }, 1000);
 });
 
 timelineDOM.addEventListener("input", (e: Event) => {
-  videoDOM.currentTime = parseInt((e.target as HTMLInputElement).value);
+  const input = e.target as HTMLInputElement;
+  videoDOM.currentTime = parseInt(input.value);
+});
+
+document.addEventListener("keydown", (e) => {
+  const keyName = e.key;
+  if (keyName === " ") {
+    playVideo();
+  } else if (keyName === "f") {
+    expandVideo();
+  } else if (keyName === "m") {
+    muteVideo();
+  } else if (keyName === "F12" || keyName === "Dead") {
+    e.preventDefault();
+  }
 });
