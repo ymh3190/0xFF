@@ -5,7 +5,7 @@ import express, {
   Request,
   Response,
 } from "express";
-import files, { type Files, type File } from "./db/files";
+import files, { type File } from "./db/files";
 import mysql from "./db/mysql";
 // const [videos] = await (await mysql).query("SELECT * FROM videos");
 // import cookie from "cookie";
@@ -59,7 +59,7 @@ app.get("/search", (req, res) => {
   if (!query || (page && isNaN(Number(page)))) {
     return res.redirect("/");
   }
-  const containers: Files = [];
+  const containers: File[] = [];
   const terms = (query as string).trim().split(" ");
   for (const term of terms) {
     for (const file of files) {
