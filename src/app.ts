@@ -43,16 +43,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", async (req, res) => {
-  const contents = files.filter((file, i) => {
-    if (i < 8) return file;
-  });
-  res.status(200).render("pages/index", { files: contents });
-});
-
-app.get("/:id(\\d+)", (req, res) => {
+app.get("/:id(\\d?)", (req, res) => {
   const { id } = req.params;
-  const pagination = Number(id);
+  const pagination = id ? Number(id) : 0;
   const pre = pagination * 8;
   const next = (pagination + 1) * 8;
   const contents = files.filter((file, i) => {
