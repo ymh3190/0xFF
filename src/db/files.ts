@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
 
-type File = {
+export type File = {
   path: string;
   title: string;
 };

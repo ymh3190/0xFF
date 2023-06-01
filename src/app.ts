@@ -5,8 +5,7 @@ import express, {
   Request,
   Response,
 } from "express";
-import path from "path";
-import files, { type Files } from "./db/files";
+import files, { type Files, type File } from "./db/files";
 import mysql from "./db/mysql";
 // const [videos] = await (await mysql).query("SELECT * FROM videos");
 // import cookie from "cookie";
@@ -14,7 +13,6 @@ import mysql from "./db/mysql";
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("views", path.resolve(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static("static"));
 app.use("/dist", express.static("dist"));
@@ -49,7 +47,6 @@ app.get("/", async (req, res) => {
   const contents = files.filter((file, i) => {
     if (i < 8) return file;
   });
-
   res.status(200).render("pages/index", { files: contents });
 });
 
@@ -61,7 +58,6 @@ app.get("/:id(\\d+)", (req, res) => {
   const contents = files.filter((file, i) => {
     if (i >= pre && i < next) return file;
   });
-
   res.status(200).render("pages/index", { files: contents });
 });
 
@@ -80,7 +76,6 @@ app.get("/search", (req, res) => {
       }
     }
   }
-
   const paginations = Math.ceil(containers.length / 8);
   const pagination = page ? Number(page) : 0;
   const pre = pagination * 8;
@@ -88,7 +83,6 @@ app.get("/search", (req, res) => {
   const contents = containers.filter((file, i) => {
     if (i >= pre && i < next) return file;
   });
-
   res
     .status(200)
     .render("pages/search", { files: contents, paginations, query });
@@ -96,7 +90,7 @@ app.get("/search", (req, res) => {
 
 app.get("/watch/:id", (req, res) => {
   const { id } = req.params;
-  let video;
+  let video: File | undefined;
   for (const file of files) {
     if (file.title.includes(id)) {
       video = file;
@@ -106,7 +100,6 @@ app.get("/watch/:id", (req, res) => {
   if (!video) {
     return res.status(404).render("pages/error", { errMsg: "Video not found" });
   }
-
   res.status(200).render("pages/watch", { file: video });
 });
 

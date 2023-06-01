@@ -1,5 +1,4 @@
 {
-  "extends": "@tsconfig/node16/tsconfig.json",
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 16",
 
@@ -13,6 +12,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+
     "outDir": "build"
-  }
+  },
+
+  "include": ["src"],
+  "exclude": ["node_modules", "src/public/*"]
 }

@@ -13,6 +13,8 @@ const containerDOM = document.getElementById("container") as HTMLDivElement;
 const containerInteractionDOM = document.getElementById(
   "containerInteraction"
 ) as HTMLDivElement;
+const timelineDOM = document.getElementById("timeline") as HTMLInputElement;
+
 let volume = volumeRangeDOM.value;
 
 playDOM.addEventListener("click", async () => {
@@ -71,6 +73,7 @@ videoDOM.addEventListener("loadedmetadata", (e) => {
   const hours = Math.floor(videoDOM.duration / 3600);
   const time = { seconds, minutes, hours };
   updateTime(time, entireTimeDOM);
+  timelineDOM.max = String(Math.floor(videoDOM.duration));
 });
 
 videoDOM.addEventListener("timeupdate", () => {
@@ -79,6 +82,7 @@ videoDOM.addEventListener("timeupdate", () => {
   const hours = Math.floor(videoDOM.currentTime / 3600);
   const time = { seconds, minutes, hours };
   updateTime(time, currentTimeDOM);
+  timelineDOM.value = String(Math.floor(videoDOM.currentTime));
 });
 
 expandDOM.addEventListener("click", () => {
@@ -100,7 +104,7 @@ expandDOM.addEventListener("click", () => {
 });
 
 let moveTimeout: NodeJS.Timeout | null;
-const handlecontainerInteractionDOM = () => {
+containerDOM.addEventListener("mousemove", () => {
   if (moveTimeout) {
     clearTimeout(moveTimeout);
     moveTimeout = null;
@@ -109,6 +113,8 @@ const handlecontainerInteractionDOM = () => {
   moveTimeout = setTimeout(() => {
     containerInteractionDOM.style.display = "none";
   }, 3000);
-};
+});
 
-containerDOM.addEventListener("mousemove", handlecontainerInteractionDOM);
+timelineDOM.addEventListener("input", (e: Event) => {
+  videoDOM.currentTime = parseInt((e.target as HTMLInputElement).value);
+});
