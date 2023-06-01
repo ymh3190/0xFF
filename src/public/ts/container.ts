@@ -30,7 +30,19 @@ const playVideo = () => {
 };
 
 playDOM.addEventListener("click", playVideo);
-volumeDOM.addEventListener("click", playVideo);
+videoDOM.addEventListener("click", playVideo);
+
+volumeDOM.addEventListener("click", () => {
+  if (!videoDOM.muted) {
+    videoDOM.muted = true;
+    volumeDOM.classList.add("fa-volume-xmark");
+    volumeRangeDOM.value = "0";
+  } else {
+    videoDOM.muted = false;
+    volumeDOM.classList.remove("fa-volume-xmark");
+    volumeRangeDOM.value = volume;
+  }
+});
 
 volumeRangeDOM.addEventListener("input", (e: Event) => {
   videoDOM.volume = parseInt((e.target as HTMLInputElement).value) / 100;
@@ -92,15 +104,11 @@ expandDOM.addEventListener("click", () => {
     expandDOM.classList.remove("fa-expand");
     expandDOM.classList.add("fa-compress");
     videoDOM.classList.add("video-expand");
-    containerDOM.classList.add("container-expand");
-    containerInteractionDOM.classList.add("container-interaction-expand");
   } else {
     document.exitFullscreen();
     expandDOM.classList.remove("fa-compress");
     expandDOM.classList.add("fa-expand");
     videoDOM.classList.remove("video-expand");
-    containerDOM.classList.remove("container-expand");
-    containerInteractionDOM.classList.remove("container-interaction-expand");
   }
 });
 
@@ -112,7 +120,7 @@ containerDOM.addEventListener("mousemove", () => {
   }
   containerInteractionDOM.style.display = "grid";
   moveTimeout = setTimeout(() => {
-    containerInteractionDOM.style.display = "none";
+    // containerInteractionDOM.style.display = "none";
   }, 1000);
 });
 
