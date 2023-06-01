@@ -17,7 +17,7 @@ const timelineDOM = document.getElementById("timeline") as HTMLInputElement;
 
 let volume = volumeRangeDOM.value;
 
-playDOM.addEventListener("click", async () => {
+const playVideo = () => {
   if (videoDOM.paused) {
     videoDOM.play();
     playDOM.classList.remove("fa-play");
@@ -27,32 +27,33 @@ playDOM.addEventListener("click", async () => {
     playDOM.classList.remove("fa-pause");
     playDOM.classList.add("fa-play");
   }
-});
+};
 
-volumeDOM.addEventListener("click", () => {
-  if (!videoDOM.muted) {
-    videoDOM.muted = true;
-    volumeDOM.classList.add("fa-volume-xmark");
-    volumeRangeDOM.value = "0";
-  } else {
-    videoDOM.muted = false;
-    volumeDOM.classList.remove("fa-volume-xmark");
-    volumeRangeDOM.value = volume;
-  }
-});
+playDOM.addEventListener("click", playVideo);
+volumeDOM.addEventListener("click", playVideo);
 
 volumeRangeDOM.addEventListener("input", (e: Event) => {
   videoDOM.volume = parseInt((e.target as HTMLInputElement).value) / 100;
-
+  type Volume = "high" | "low" | "off" | "xmark";
+  type FaVolume = `fa-volume-${Volume}`;
+  const volumes: FaVolume[] = [
+    "fa-volume-high",
+    "fa-volume-low",
+    "fa-volume-off",
+    "fa-volume-xmark",
+  ];
   if (videoDOM.volume >= 0.6) {
-    volumeDOM.classList.remove("fa-volume-off", "fa-volume-low");
+    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-high");
   } else if (videoDOM.volume >= 0.3 && videoDOM.volume < 0.6) {
-    volumeDOM.classList.remove("fa-volume-high", "fa-volume-off");
+    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-low");
-  } else {
-    volumeDOM.classList.remove("fa-volume-high", "fa-volume-low");
+  } else if (videoDOM.volume > 0 && videoDOM.volume < 0.3) {
+    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-off");
+  } else {
+    volumeDOM.classList.remove(...volumes);
+    volumeDOM.classList.add("fa-volume-xmark");
   }
 });
 
@@ -112,7 +113,7 @@ containerDOM.addEventListener("mousemove", () => {
   containerInteractionDOM.style.display = "grid";
   moveTimeout = setTimeout(() => {
     containerInteractionDOM.style.display = "none";
-  }, 3000);
+  }, 1000);
 });
 
 timelineDOM.addEventListener("input", (e: Event) => {
