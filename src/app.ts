@@ -1,7 +1,11 @@
 import "dotenv/config";
-import express from "express";
+import express, {
+  ErrorRequestHandler,
+  NextFunction,
+  Request,
+  Response,
+} from "express";
 import files, { type File } from "./db/files";
-import errorHandlerMiddleware from "./middleware/error-handler";
 // import cookie from "cookie";
 const app = express();
 
@@ -92,7 +96,16 @@ app.get("/watch/:id", (req, res) => {
 app.use((req, res) => {
   res.status(404).render("pages/error", { errMsg: "Route not found" });
 });
-app.use(errorHandlerMiddleware);
+app.use(
+  (
+    err: ErrorRequestHandler,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    if (err) throw err;
+  }
+);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
