@@ -4,17 +4,14 @@ import { randomFillSync } from "crypto";
 export type File = {
   path: string;
   title: string;
-  thumbnail: string;
 };
 
 const files: File[] = readdirSync("static")
-  .filter((file) => !file.includes(".DS_Store") && file.includes(".mp4"))
+  .filter((file) => !file.includes(".DS_Store"))
   .map((file) => {
-    const title = file.split(".")[0];
     return {
-      path: `/static/${title}.mp4`,
-      title,
-      thumbnail: `/static/${title}.jpg`,
+      path: `/static/${file}`,
+      title: `${file.split(".")[0]}`,
     };
   });
 
