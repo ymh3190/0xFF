@@ -10,11 +10,12 @@ import files, { type File } from "./db/files";
 const app = express();
 
 app.set("view engine", "ejs");
+app.set("views", process.cwd() + "/src/views");
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static("static"));
 app.use("/dist", express.static("dist"));
-app.use("/logo", express.static("logo"));
-app.use("/favicon", express.static("favicon"));
+app.use("/logo", express.static("src/public/logo"));
+app.use("/favicon", express.static("src/public/favicon"));
 // app.use((req, res, next) => {
 //   const buf = Buffer.alloc(16);
 //   const hex = randomFillSync(buf).toString();
