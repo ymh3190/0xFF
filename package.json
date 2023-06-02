@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "tsc",
-    "dev": "nodemon -i webpack.config.js -x ts-node src/app.ts",
+    "start": "node build/app.js",
+    "build": "tsc && webpack --mode=production",
+    "dev": "nodemon -i webpack.config.js -i src/public -x ts-node src/app.ts",
     "dist": "webpack --mode=development -w"
   },
   "license": "MIT",
@@ -27,5 +28,8 @@
     "ts-node": "^10.9.1",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

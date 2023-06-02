@@ -5,7 +5,7 @@ module.exports = {
   entry: {
     main: "./src/public/ts/main.ts",
     search: "./src/public/ts/search.ts",
-    container: "./src/public/ts/container.ts",
+    videoPlayer: "./src/public/ts/videoPlayer.ts",
   },
   output: {
     filename: "./js/[name].js",

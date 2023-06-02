@@ -10,9 +10,7 @@ const currentTimeDOM = document.getElementById(
 const entireTimeDOM = document.getElementById("entireTime") as HTMLSpanElement;
 const expandDOM = document.getElementById("expand") as HTMLElement;
 const containerDOM = document.getElementById("container") as HTMLDivElement;
-const containerInteractionDOM = document.getElementById(
-  "containerInteraction"
-) as HTMLDivElement;
+const videoPlayerDOM = document.getElementById("videoPlayer") as HTMLDivElement;
 const timelineDOM = document.getElementById("timeline") as HTMLInputElement;
 
 let volume = volumeRangeDOM.value;
@@ -57,17 +55,14 @@ volumeRangeDOM.addEventListener("input", (e: Event) => {
     "fa-volume-off",
     "fa-volume-xmark",
   ];
+  volumeDOM.classList.remove(...volumes);
   if (videoDOM.volume >= 0.6) {
-    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-high");
   } else if (videoDOM.volume >= 0.3 && videoDOM.volume < 0.6) {
-    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-low");
   } else if (videoDOM.volume > 0 && videoDOM.volume < 0.3) {
-    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-off");
   } else {
-    volumeDOM.classList.remove(...volumes);
     volumeDOM.classList.add("fa-volume-xmark");
   }
 });
@@ -116,6 +111,7 @@ const expandVideo = () => {
 };
 
 expandDOM.addEventListener("click", expandVideo);
+videoDOM.addEventListener("dblclick", expandVideo);
 
 let moveTimeout: NodeJS.Timeout | null;
 containerDOM.addEventListener("mousemove", () => {
@@ -123,9 +119,9 @@ containerDOM.addEventListener("mousemove", () => {
     clearTimeout(moveTimeout);
     moveTimeout = null;
   }
-  containerInteractionDOM.style.display = "grid";
+  videoPlayerDOM.style.display = "grid";
   moveTimeout = setTimeout(() => {
-    containerInteractionDOM.style.display = "none";
+    videoPlayerDOM.style.display = "none";
   }, 1000);
 });
 
@@ -145,4 +141,9 @@ document.addEventListener("keydown", (e) => {
   } else if (keyName === "F12" || keyName === "Dead") {
     e.preventDefault();
   }
+});
+
+document.addEventListener("fullscreenchange", () => {
+  // TODO: exitfullscreen when esc key is down
+  // reference: https://developer.mozilla.org/en-US/docs/Web/API/Element/fullscreenchange_event#specifications
 });

@@ -1,15 +1,10 @@
 import "dotenv/config";
-import express, {
-  ErrorRequestHandler,
-  NextFunction,
-  Request,
-  Response,
-} from "express";
+import express from "express";
 import files, { type File } from "./db/files";
 import mysql from "./db/mysql";
+import errorHandlerMiddleware from "./middleware/error-handler";
 // const [videos] = await (await mysql).query("SELECT * FROM videos");
 // import cookie from "cookie";
-// import { randomFillSync } from "crypto";
 const app = express();
 
 app.set("view engine", "ejs");
@@ -43,7 +38,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/:id(\\d?)", (req, res) => {
+app.get("/:id(\\d?|\\d+)", (req, res) => {
   const { id } = req.params;
   const pagination = id ? Number(id) : 0;
   const pre = pagination * 8;
@@ -81,11 +76,11 @@ app.get("/search", (req, res) => {
     .render("pages/search", { files: contents, paginations, query });
 });
 
-app.get("/watch/:id", (req, res) => {
+app.get("/watch/:id(\\w{32})", (req, res) => {
   const { id } = req.params;
   let video: File | undefined;
   for (const file of files) {
-    if (file.title.includes(id)) {
+    if (file.id.includes(id)) {
       video = file;
       break;
     }
@@ -99,17 +94,7 @@ app.get("/watch/:id", (req, res) => {
 app.use((req, res) => {
   res.status(404).render("pages/error", { errMsg: "Route not found" });
 });
-
-app.use(
-  (
-    err: ErrorRequestHandler,
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    if (err) throw err;
-  }
-);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
