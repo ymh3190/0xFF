@@ -2,20 +2,19 @@ import { readdirSync } from "fs";
 import { randomFillSync } from "crypto";
 
 export type File = {
-  id: string;
   path: string;
   title: string;
+  thumbnail: string;
 };
 
 const files: File[] = readdirSync("static")
-  .filter((file) => !file.includes(".DS_Store"))
+  .filter((file) => !file.includes(".DS_Store") && file.includes(".mp4"))
   .map((file) => {
-    const buf = Buffer.alloc(16);
-    const random = randomFillSync(buf).toString("hex");
+    const title = file.split(".")[0];
     return {
-      id: random,
-      path: `/static/${file}`,
-      title: file.split(".")[0],
+      path: `/static/${title}.mp4`,
+      title,
+      thumbnail: `/static/${title}.jpg`,
     };
   });
 

@@ -121,7 +121,7 @@ containerDOM.addEventListener("mousemove", () => {
   }
   videoPlayerDOM.style.display = "grid";
   moveTimeout = setTimeout(() => {
-    videoPlayerDOM.style.display = "none";
+    // videoPlayerDOM.style.display = "none";
   }, 1000);
 });
 
@@ -139,7 +139,7 @@ document.addEventListener("keydown", (e) => {
   } else if (keyName === "m") {
     muteVideo();
   } else if (keyName === "F12" || keyName === "Dead") {
-    e.preventDefault();
+    // e.preventDefault();
   }
 });
 

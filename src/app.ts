@@ -1,9 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import files, { type File } from "./db/files";
-import mysql from "./db/mysql";
 import errorHandlerMiddleware from "./middleware/error-handler";
-// const [videos] = await (await mysql).query("SELECT * FROM videos");
 // import cookie from "cookie";
 const app = express();
 
@@ -76,11 +74,11 @@ app.get("/search", (req, res) => {
     .render("pages/search", { files: contents, paginations, query });
 });
 
-app.get("/watch/:id(\\w{32})", (req, res) => {
+app.get("/watch/:id", (req, res) => {
   const { id } = req.params;
   let video: File | undefined;
   for (const file of files) {
-    if (file.id.includes(id)) {
+    if (file.title.includes(id)) {
       video = file;
       break;
     }
