@@ -79,7 +79,7 @@ app.get("/search", (req, res) => {
     .render("pages/search", { files: contents, paginations, query });
 });
 
-app.get("/watch/:id", (req, res) => {
+app.get("/watch/:id(\\w{16})", (req, res) => {
   const { id } = req.params;
   let video: File | undefined;
   for (const file of files) {
